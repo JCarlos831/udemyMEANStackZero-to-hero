@@ -1,0 +1,34 @@
+{
+  "name": "udemy_mean_stack_zero_to_hero",
+  "version": "1.0.0",
+  "description": "Udemy Mean Stack Zero-to-Hero",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JCarlos831/udemyMEANStackZero-to-hero.git"
+  },
+  "keywords": [
+    "udemy",
+    "meanStack",
+    "node",
+    "mongo",
+    "angular",
+    "express"
+  ],
+  "author": "Juan Montoya",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JCarlos831/udemyMEANStackZero-to-hero/issues"
+  },
+  "homepage": "https://github.com/JCarlos831/udemyMEANStackZero-to-hero#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "mocha": "^5.0.0"
+  }
+}
