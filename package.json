@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/JCarlos831/udemyMEANStackZero-to-hero#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2"
   },
   "devDependencies": {
