@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-var dburl = 'mongodb://'+process.env.IP+':27017/meanHotel';
+var dburl = 'mongodb://'+process.env.IP+':27017/meanhotel';
 
 var _connection = null;
 
@@ -9,7 +9,7 @@ var open = function() {
             console.log ("DB connection failed");
             return;
         }
-        _connection = client.db("meanHotel");
+        _connection = client.db("meanhotel");
         console.log("DB connection open", client);
     });
     //set _connection

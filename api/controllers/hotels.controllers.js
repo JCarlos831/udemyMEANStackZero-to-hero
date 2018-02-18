@@ -29,6 +29,8 @@ module.exports.hotelsGetAll = function(req, res) {
 };
 
 module.exports.hotelsGetOne = function(req, res) {
+    
+    var db = dbconn.get();
     var hotelId = req.params.hotelId;
     var thisHotel = hotelData[hotelId];
    console.log("GET hotelId", hotelId);
@@ -38,6 +40,8 @@ module.exports.hotelsGetOne = function(req, res) {
 };
 
 module.exports.hotelsAddOne = function(req, res) {
+    
+   var db = dbconn.get();
    console.log("POST new hotel");
    console.log(req.body);
    res
