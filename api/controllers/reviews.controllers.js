@@ -10,10 +10,26 @@ module.exports.reviewsGetAll = function(req, res) {
         .findById(hotelId)
         .select('reviews')
         .exec(function(err, doc) {
-            console.log("Returned doc", doc);
+            var response = {
+                status : 200,
+                message : []
+            };
+            if (err) {
+                console.log("Error finding hotel");
+                response.status = 500;
+                response.message = err;
+            } else if(!doc) {
+                console.log("Hotel id not found in the database", hotelId);
+                response.status = 404;
+                response.message = {
+                    "message" : "Hotel ID not found " + hotelId
+                };
+            } else {
+                response.message = doc.reviews ? doc.reviews : [];
+            }
         res
-            .status(200)
-            .json(doc.reviews); 
+            .status(response.status)
+            .json(response.message); 
         });  
 };
 
@@ -27,10 +43,31 @@ module.exports.reviewsGetOne = function(req, res) {
         .findById(hotelId)
         .select('reviews')
         .exec(function(err, hotel) {
-            console.log("Returned hotel", hotel);
-            var review = hotel.reviews.id(reviewId);
+            var response = {
+                status : 200,
+                message : {}
+            };
+            if (err) {
+                console.log("Error finding hotel");
+                response.status = 500;
+                response.message = err;
+            } else if (!hotel) {
+                console.log("Hotel id not found in the database", hotelId);
+                response.status = 404;
+                response.message = {
+                    "message" : "Hotel ID not found " + hotelId
+                };
+            } else {
+                response.message = hotel.reviews.id(reviewId);
+                if (!response.message) {
+                    response.status = 404;
+                    response.message = {
+                        "message" : "Review ID not found " + reviewId
+                    };
+                }
+            }
         res
-            .status(200)
-            .json(review); 
+            .status(response.status)
+            .json(response.message); 
     });
 };
