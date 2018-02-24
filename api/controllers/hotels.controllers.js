@@ -1,59 +1,6 @@
 var mongoose = require('mongoose');
 var Hotel = mongoose.model('Hotel');
 
-// var runGeoQuery = function(req, res) {
-    
-//     var lng = parseFloat(req.query.lng);
-//     var lat = parseFloat(req.query.lat);
-    
-//     //A geoJSON point
-//     var point = {
-//         type: "Point",
-//         coordinates : [lng, lat]
-//     };
-    
-//     var geoOptions = {
-//         spherical : true,
-//         maxDistance : 2000,
-//         num : 5
-//     }
-    
-//     Hotel
-//         .geoNear(point, geoOptions, function(err, results, stats) {
-//             console.log('Geo results', results);
-//             console.log('Geo stats', stats);
-//             res
-//                 .status(200)
-//                 .json(results);
-//         });
-    
-//     app.get('/hotels', function(req, res) {
-//       db.collection('hotels').aggregate([
-//       { 
-//             "$geoNear": {
-//                 "near": {
-//                      "type": "Point",
-//                      "coordinates": [parseFloat(req.params.lng), parseFloat(req.params.lat)]
-//                  },
-//                  "distanceField": "distance",
-//                  "maxDistance": 2000,
-//                  "spherical": true,
-//                  "query": { "loc.type": "Point" }
-//              }
-//         },
-//         { 
-//              "$sort": {"distance": -1} // Sort the nearest first
-//         } 
-//     ],
-//     function(err, docs) {
-//          res.json(docs);       
-//     });      
-// });
-    
-// };
-
-
-
 module.exports.hotelsGetAll = function(req, res) {
     
     var offset = 0;
@@ -177,4 +124,60 @@ module.exports.hotelsAddOne = function(req, res) {
             }
         });
 
+};
+
+module.exports.hotelsUpdateOne = function(req,res) {
+    var hotelId = req.params.hotelId;
+    console.log("GET hotelId", hotelId);
+    
+    Hotel
+        .findById(hotelId)
+        .select("-reviews -rooms")
+        .exec(function(err, doc) {
+            var response = {
+                status : 200,
+                message : doc
+            };
+            if (err) {
+                console.log("Error finding hotel");
+                response.status = 500;
+                response.message = err;
+            } else if (!doc) {
+                response.status = 404;
+                response.message = {
+                    "message" : "Hotel ID not found"
+                    };
+            }
+            if (response.status !== 200) {
+            res
+                .status(response.status)
+                .json(response.message);
+            } else {
+                doc.name = req.body.name;
+                doc.description = req.body.description;
+                doc.stars = parseInt(req.body.stars, 10);
+                doc.services = _splitArray(req.body.services);
+                doc.photos = _splitArray(req.body.photos);
+                doc.currency = req.body.currency;
+                doc.location = {
+                    address : req.body.address,
+                    coordinates : [
+                        parseFloat(req.body.lng),
+                        parseFloat(req.body.lat)
+                        ]
+                };
+                
+                doc.save(function(err, hotelUpdated) {
+                    if(err) {
+                        res
+                            .status(500)
+                            .json(err);
+                    } else {
+                        res
+                            .status(204)
+                            .json();
+                    }
+                });
+            }
+        });
 };
