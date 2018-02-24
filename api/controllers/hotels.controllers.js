@@ -152,9 +152,9 @@ module.exports.hotelsAddOne = function(req, res) {
         .create({
             name : req.body.name,
             description : req.body.description,
-            stars : parseInt(req.body.stars),
-            services : req.body.services,
-            photos : req.body.photos,
+            stars : parseInt(req.body.stars, 10),
+            services : _splitArray(req.body.services),
+            photos : _splitArray(req.body.photos),
             currency : req.body.currency,
             location : {
                 address : req.body.address,
