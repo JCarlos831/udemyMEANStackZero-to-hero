@@ -1,4 +1,4 @@
-<h1>Information on {{ vm.hotel.name }} <hotel-rating stars="vm.stars"></hotel-rating></h1>
+<h1>{{ vm.hotel.name }} <hotel-rating stars="vm.stars"></hotel-rating></h1>
 
 <p><small>{{ vm.hotel.location.address }}</small></p>
 
@@ -21,7 +21,7 @@
     Your rating: <input type="number" name="rating" required ng-pattern="/^[1-5]$/" ng-model="vm.rating">
     <div ng-show="vm.reviewForm.rating.$dirty && vm.reviewForm.rating.$invalid && vm.isSubmitted">
         <p>Rating must be between 1-5.</p>
-        </div>
+    </div>
         
     Your review: <textarea name="review" required ng-model="vm.review"></textarea>
     <div ng-show="vm.reviewForm.review.$dirty && vm.isSubmitted">
