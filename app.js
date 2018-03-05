@@ -9,7 +9,8 @@ var routes = require('./api/routes');
 // Define the port to run on
 app.set('port', process.env.PORT);
 
-// Add middleware to console log every request
+// Add middleware to console log every 
+// Non-Blocking
 app.use(function(req, res, next){
     console.log(req.method, req.url);
     next();
@@ -20,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
 
 // Enable parsing of posted forms
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Add some routing
