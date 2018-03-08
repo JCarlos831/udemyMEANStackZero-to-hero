@@ -7,7 +7,7 @@ var ctrlUsers = require('../controllers/users.controllers.js');
 
 router
     .route('/hotels')
-    .get(ctrlUsers.authenticate, ctrlHotels.hotelsGetAll)
+    .get(ctrlHotels.hotelsGetAll)
     .post(ctrlHotels.hotelsAddOne);
 
 router
